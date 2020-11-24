@@ -9,6 +9,7 @@ set.seed(2020)
 # Files
 Train_file <- "D:\\School\\Grad\\R\\Final_Project\\Training_Data\\Boston Celtics\\Tatum.csv"  # 2017-2018 Season CSV (using Player Excel)
 Test_file <- "D:\\School\\Grad\\R\\Final_Project\\Test_Data\\Boston Celtics\\Tatum.csv"       # 2018-2019 Season CSV (using Player Excel)
+
 Output_path <- "D:\\School\\Grad\\R\\Final_Project\\Output\\Tatum.csv"                        # This will be combined to make master.csv
 
 Team <- 'Boston Celtics'                                                                      # We need to manually put team

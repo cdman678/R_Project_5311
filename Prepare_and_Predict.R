@@ -8,11 +8,11 @@ set.seed(2020)
 
 # Files
 Train_file <- "D:\\School\\Grad\\R\\Final_Project\\Training_Data\\Boston Celtics\\Tatum.csv"  # 2017-2018 Season CSV (using Player Excel)
-Test_file <- "D:\\School\\Grad\\R\\Final_Project\\Test_Data\\Boston Celtics\\Tatum.csv"       # 2017-2018 Season CSV (using Player Excel)
-Output_path <- "D:\\School\\Grad\\R\\Final_Project\\Output\\Tatum.csv"                       # This will be combined to make master.csv
+Test_file <- "D:\\School\\Grad\\R\\Final_Project\\Test_Data\\Boston Celtics\\Tatum.csv"       # 2018-2019 Season CSV (using Player Excel)
+Output_path <- "D:\\School\\Grad\\R\\Final_Project\\Output\\Tatum.csv"                        # This will be combined to make master.csv
 
-Team <- 'Boston Celtics'                                                                       # We need to manually put team
-Player <- 'Tatum'                                                                            # Name of Player
+Team <- 'Boston Celtics'                                                                      # We need to manually put team
+Player <- 'Tatum'                                                                             # Name of Player
 # ------
 
 # ---- Prepare Training ----
@@ -28,6 +28,8 @@ base_df <- reduced[reduced$FG != 'Inactive',]
 base_df <- base_df[base_df$FG != 'Did Not Dress',]
 base_df <- base_df[base_df$FG != 'Did Not Play',]
 base_df <- base_df[base_df$FG != 'Not With Team',]
+base_df <- base_df[base_df$FG != 'Player Suspended',]
+
 
 
 # Step 4: Calculate the Fantasy score
@@ -141,6 +143,8 @@ base_df_test <- reduced_test[reduced_test$FG != 'Inactive',]
 base_df_test <- base_df_test[base_df_test$FG != 'Did Not Dress',]
 base_df_test <- base_df_test[base_df_test$FG != 'Did Not Play',]
 base_df_test <- base_df_test[base_df_test$FG != 'Not With Team',]
+base_df_test <- base_df_test[base_df_test$FG != 'Player Suspended',]
+
 
 
 # Step 5: Shift Values
@@ -190,6 +194,9 @@ output_df <- raw_test[raw_test$FG != 'Inactive',]
 output_df <- output_df[output_df$FG != 'Did Not Dress',]
 output_df <- output_df[output_df$FG != 'Did Not Play',]
 output_df <- output_df[output_df$FG != 'Not With Team',]
+output_df <- output_df[output_df$FG != 'Player Suspended',]
+
+
 
 output_df$C_Opp <- shift(output_df$Opp, n=1, fill=NA, type="lead")
 

@@ -1,4 +1,4 @@
-path = "D:\\School\\Grad\\R\\Final_Project\\Output\\"
+path = "D:\\RP\\OP2\\"
 
 master <- data.frame(NULL, stringsAsFactors = TRUE)
 
@@ -16,7 +16,7 @@ master <- master[, -c(1)]
 master <- master[!is.na(master$predictions_2019),]
 
 # Manual: Convert the index to a player_ID
-write.csv(master, file=paste(path,'Master.csv',sep=''))
+write.csv(master, file=paste(path,'Master11.csv',sep=''))
 
 # -------- VALIDATION ---------
 

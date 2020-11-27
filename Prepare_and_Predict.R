@@ -7,13 +7,15 @@ set.seed(2020)
 # ------
 
 # Files
-Train_file <- "D:\\School\\Grad\\R\\Final_Project\\Training_Data\\Boston Celtics\\Tatum.csv"  # 2017-2018 Season CSV (using Player Excel)
-Test_file <- "D:\\School\\Grad\\R\\Final_Project\\Test_Data\\Boston Celtics\\Tatum.csv"       # 2018-2019 Season CSV (using Player Excel)
+Train_file <- "D:\\Rproject nba\\Train\\Memphis Grizzlies\\Caboclo.csv"  # 2017-2018 Season CSV (using Player Excel)
+Test_file <- "D:\\Rproject nba\\Test\\Memphis Grizzlies\\Caboclo.csv"       # 2018-2019 Season CSV (using Player Excel)
 
-Output_path <- "D:\\School\\Grad\\R\\Final_Project\\Output\\Tatum.csv"                        # This will be combined to make master.csv
+Output_path <- "D:\\RP\\OP2\\Caboclo.csv"                        # This will be combined to make master.csv
 
-Team <- 'Boston Celtics'                                                                      # We need to manually put team
-Player <- 'Tatum'                                                                             # Name of Player
+Team <- 'Memphis Grizzlies'                                                                      # We need to manually put team
+Player <- 'Caboclo'  
+position <-'F'
+# Name of Player
 # ------
 
 # ---- Prepare Training ----
@@ -73,6 +75,7 @@ base_df <- base_df[, -c(22:22)]
 
 # Step 7: 1-Hot encode the opponent field
 base_df <- one_hot(base_df, var_encode = c('Opp','C_Opp'))
+base_df[is.na(base_df)] <- 0
 base_df <- sapply( base_df, as.numeric ) # Convert Everything to numeric
 
 # ---- Create Model ----
@@ -160,22 +163,30 @@ base_df_test <- one_hot(base_df_test, var_encode = c('Opp','C_Opp'))
 # Check Column Mismatch
 train_columns <- colnames(base_df)
 test_columns <- colnames(base_df_test)
-if(length(train_columns)>length(test_columns)){
-  print("2019 missing game data. Adding default values.")
-  for(col in train_columns){
-    if(!(col%in%test_columns)){
-      if(col!="Future_Score"){
-        print(col)
-        base_df_test[, col] <- 0    
-      }
+#---- changed the code here from change.txt
+# Adding missing columns
+for(col in train_columns){
+  if(!(col%in%test_columns)){
+    if(col!="Future_Score"){
+      print('Missing')
+      print(col)
+      base_df_test[, col] <- 0    
     }
   }
-} else if(length(train_columns)<length(test_columns)){
-  print("Extra Columns")
-} else{
-  print("Same Length - All Good")
+}
+# Removing Extra Columns
+for(col in test_columns){
+  if(!(col%in%train_columns)){
+    # Don't think this if is needed but want to be safe
+    if(col!="Future_Score"){  
+      print('Extra')
+      print(col)
+      base_df_test[, col] <- NULL 
+    }
+  }
 }
 # ------
+base_df[is.na(base_df)] <- 0
 base_df_test <- sapply( base_df_test, as.numeric ) # Convert Everything to numeric
 
 # ---- Use Model ----
@@ -215,6 +226,9 @@ output_df$Team <- Team
 
 output_df$Player <- Player
 
-output_df <- output_df[,c('Player','Team','Date','Opp','Fantasy_Score','predictions_2019')]
+output_df$Position <- position
+
+output_df <- output_df[,c('Player','Position','Team','Date','Opp','Fantasy_Score','predictions_2019')]
 
 write.csv(output_df, file=Output_path)
+

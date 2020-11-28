@@ -20,6 +20,10 @@ write.csv(master, file=paste(path,'Master.csv',sep=''))
 
 # -------- VALIDATION ---------
 
+path_master <- "D:\\School\\Grad\\R\\team_branch\\R_Project_5311-mainPacific-Southwest-data\\Output\\Master.csv"
+
+master <-  read.csv(path_master,header=TRUE)
+
 players_found <- unique(master$Player)
 print(paste("Number of Players:", length(players_found), sep=" "))
 
